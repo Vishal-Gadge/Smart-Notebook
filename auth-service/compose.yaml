@@ -1,0 +1,33 @@
+services:
+
+  redis:
+    image: redis:7-alpine
+    ports:
+    - 6379:6379
+    volumes:
+    - redis_data:/data
+    command: redis-server --appendonly yes
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "4444:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      MYSQL_DATABASE: security
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    image: dangerarmy/loginregister-app:v1
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./.env:/app/.env
+    depends_on:
+      - mysql
+      - redis
+
+volumes:
+  mysql_data:
+  redis_data:

@@ -1,0 +1,35 @@
+package com.dangerarmy.auth_service.controller;
+
+import com.dangerarmy.auth_service.dto.EmailRequest;
+import com.dangerarmy.auth_service.service.EmailService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController
+@RequiredArgsConstructor
+public class EmailController {
+
+    private final EmailService emailService;
+
+    @PostMapping("/verify/email")
+    public ResponseEntity<Map<String,String>> verifyEmail(@RequestParam String token){
+        //System.out.println(emailService.verifyEmail(token));
+        emailService.verifyEmail(token);
+        return ResponseEntity.ok()
+                .body(Map.of("message","Email has been verified"));
+    }
+
+    @PostMapping("/resend-email")
+    public ResponseEntity<Map<String, String>> resendEmail(@RequestBody EmailRequest req){
+        emailService.isValidEmail(req.getEmail());
+        emailService.resendEmail(req.getEmail());
+        return ResponseEntity.ok(Map.of("message",
+                "If an account exists and is unverified, a new verification link has been sent"));
+    }
+}
