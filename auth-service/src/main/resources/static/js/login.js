@@ -25,7 +25,7 @@ if(loginBtn != null){
             btnText.textContent = 'Logging in...';
             btnSpinner.style.display = 'inline';
 
-            const response = await fetch('/req/login/verify' , {
+            const response = await fetch('/auth/req/login/verify' , {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({email,password}),
@@ -40,7 +40,8 @@ if(loginBtn != null){
                 showResult.style.display = 'block';
                 showResult.style.color = 'rgb(0, 226, 255)';
                 setTimeout(() => {
-                    window.location.href = '/';
+                    //this redirect goes to note service through gateway
+                    window.location.href = '/notes/';
                 }, 5000);
             }else{
                 console.error(result.message);

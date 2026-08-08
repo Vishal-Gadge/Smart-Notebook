@@ -1,5 +1,6 @@
 package com.dangerarmy.authservice.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
-public class SecurityConfig { 
+@RequiredArgsConstructor
+public class SecurityConfig {
 
-    @Autowired
-    private final JwtFilter jwtFilter;
+    private final InternalSecretFilter internalSecretFilter;
 
     @Bean
     public PasswordEncoder setPasswordEncoder(){
@@ -31,34 +31,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/req/signup", "/req/login","/req/signup/save",
-                                    "/req/login/**","/req/login/verify","/favicon.ico","/test","/verify/email",
-                                    "/req/logout","/html/logout.html","/test/**","/test",
-                                    "/req/forgotPass","/verify/forgotPass","/html/forgotPass.html","/redis-test",
-                                    "/html/resend-verification.html","/resend-email",
-                                    "/css/**","/js/**","/images/**","/static/**","/html/**","/favicon.ico",
-                                    "/note/**")
-                            .permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 })
-
-//                .exceptionHandling(ex -> ex
-//                        .authenticationEntryPoint((request, response,
-//                                                   authException) ->
-//                                response.sendRedirect("/req/login")
-//                        )
-//                )
-                .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
-
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-                .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class)
-
+                .addFilterBefore(internalSecretFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

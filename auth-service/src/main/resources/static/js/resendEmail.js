@@ -22,7 +22,7 @@ if(resendEmailBtn !== null){
             btnText.textContent = 'Resending Email...';
             btnSpinner.style.display = 'inline';
 
-            const response = await fetch("/resend-email",{
+            const response = await fetch("/auth/resend-email",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({email:resendEmail})
@@ -38,7 +38,7 @@ if(resendEmailBtn !== null){
                 showResult.style.display = 'block';
                 showResult.style.color = 'green';
                 setTimeout(() => {
-                    window.location.href = '/req/login';
+                    window.location.href = '/auth/req/login';
                 }, 5000);
             }else{
                 console.error(result.message);

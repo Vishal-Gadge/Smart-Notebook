@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded',async (evt) => {
 
     if(!token){
         showMessage.textContent = 'No verification token found😒';
-        showLink.href = "/html/resend-verification.html";
+        showLink.href = "/auth/html/resend-verification.html";
         showLink.textContent = 'Resend verification email';
         return;
     }
 
     try {
-        const response = await fetch(`/verify/email?token=${token}`,{
+        const response = await fetch(`/auth/verify/email?token=${token}`,{
             method:'POST'
         });
     
@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded',async (evt) => {
             showResult.style.color = 'green';
             showMessage.textContent = `${result.message}✅ You will be redirect to login...⏳`;
             setTimeout(() => {
-                window.location.href = '/req/login';
+                window.location.href = '/auth/req/login';
             }, 5000);
         }else {   //InvalidToken or Expired 
             showMessage.textContent = `${result.message}😕`;
-            showLink.href = "/html/resend-verification.html";
+            showLink.href = "/auth/html/resend-verification.html";
             showLink.textContent = "Resend verification email";
         }
     } catch (error) {

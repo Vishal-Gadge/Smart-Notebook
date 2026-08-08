@@ -13,29 +13,28 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/note")
 public class NoteController {
 
     private final NoteService noteService;
 
     @PostMapping("/add")
-    public ResponseEntity<Map<String, String>> addNote(@RequestBody NoteReq note){
-        noteService.addNote(note);
+    public ResponseEntity<Map<String, String>> addNote(@RequestBody NoteReq note,@RequestHeader("X-User-Id") Long userId){
+        noteService.addNote(note, userId);
         return ResponseEntity.ok(Map.of("message","Note has been saved"));
     }
 
     @GetMapping("/getnotes")
-    public List<Note> getNotes(){
-        return noteService.getNotes();
+    public List<Note> getNotes(@RequestHeader("X-User-Id") Long userId){
+        return noteService.getNotes(userId);
     }
 
     @PutMapping("/update")
-    public void updateNote(@RequestBody NoteReq req){
-        noteService.updateNote(req);
+    public void updateNote(@RequestBody NoteReq req, @RequestHeader("X-User-Id") Long userId){
+        noteService.updateNote(req, userId);
     }
 
     @DeleteMapping("/delete")
-    public void deleteNote(@RequestBody DelNoteDto req){
-        noteService.deleteNote(req.getTitle());
+    public void deleteNote(@RequestBody DelNoteDto req, @RequestHeader("X-User-Id") Long userId){
+        noteService.deleteNote(req.getTitle(), userId);
     }
 }

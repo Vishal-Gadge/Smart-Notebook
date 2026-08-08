@@ -5,7 +5,7 @@ if(adminBtn != null){
     adminBtn.addEventListener('click',async (evt) => {
         evt.preventDefault();
 
-        const response = await fetch("/admin/verify",{
+        const response = await fetch("/auth/admin/verify",{
             method:'GET',
             headers:{"Content-Type":"application/json"},
             credentials:'include'
@@ -15,7 +15,7 @@ if(adminBtn != null){
             const result = await response.json();
             if(response.ok){
                 alert(result.message);
-                window.location.href='/admin/showAdminPanel';
+                window.location.href='/auth/admin/showAdminPanel';
             }else{
                 alert("You are not Admin");
             }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const container = document.querySelector('#showAllUsersDiv');
     if(container != null){
         container.innerHTML = "<h2>Data is getting fetched...</h2>";
-        const response = await fetch('/admin/getAllUsers',{
+        const response = await fetch('/auth/admin/getAllUsers',{
             credentials:'include'
         })
         const result = await response.json();
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded',async () => {
     const container = document.getElementById('showAllAdminsDiv');
     if(container != null){
         container.innerHTML ='<h2>Data is getting fetched...</h2>';
-        const response = await fetch('/admin/getAllAdmins',{
+        const response = await fetch('/auth/admin/getAllAdmins',{
             credentials:'include'
         })
         const result = await response.json();
@@ -138,7 +138,7 @@ if(addNewAdminBtn !== null){
             return;
         }
 
-        const response = await fetch('/admin/addAdmin',{
+        const response = await fetch('/auth/admin/addAdmin',{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(admin),
@@ -149,7 +149,7 @@ if(addNewAdminBtn !== null){
 
         if(response.ok){
             alert("Admin Saved");
-            window.location.href='/admin/showAdminPanel';
+            window.location.href='/auth/admin/showAdminPanel';
         }else{
             alert("Admin saved failed");
             console.error("Admin saved failed");

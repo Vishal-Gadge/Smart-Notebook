@@ -53,8 +53,8 @@ public class LoginService {
         }
 
         //password check
-        if(!passwordEncoder.matches(req.getPassword() , dbuser.orElseThrow().getPassword())){
-            log.warn("Password don't match for email :{}",emailService.maskEmail(req.getEmail()));
+        if(!passwordEncoder.matches(req.getPassword(), dbuser.orElseThrow().getPassword())){
+            log.warn("Password don't match while login for email :{}",emailService.maskEmail(req.getEmail()));
             throw new InvalidException("Invalid Credentials");
         }
 
@@ -67,9 +67,7 @@ public class LoginService {
 
         //generate jwt
         String jwt = jwtService.generateToken(dbuser.orElseThrow());
-
-        log.info("jwt token was generated :{}",jwt);
-        //response cookie for 1 day
+        log.info("jwt is :{}",jwt);
         ResponseCookie responseCookie = ResponseCookie.from("jwt",jwt)
                 .httpOnly(true)
                 .secure(true)

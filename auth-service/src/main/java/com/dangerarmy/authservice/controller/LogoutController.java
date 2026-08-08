@@ -16,6 +16,6 @@ public class LogoutController {
     @PostMapping("/req/logout")
     public String logout(HttpServletRequest servletRequest, HttpServletResponse servletResponse){
         logoutService.logout(servletRequest, servletResponse);
-        return "redirect:/req/login";
+        return "login";
     }
 }

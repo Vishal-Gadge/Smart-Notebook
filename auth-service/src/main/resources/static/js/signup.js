@@ -42,7 +42,7 @@ if(signupBtn != null){
             signupBtnText.textContent = 'Signing up...';
             signupSpinner.style.display = 'inline';
 
-            const response = await fetch("/req/signup/save" , {
+            const response = await fetch("/auth/req/signup/save" , {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify(userDetails)
@@ -56,7 +56,7 @@ if(signupBtn != null){
                 showResult.style.display = 'block';
                 showResult.style.color = 'rgb(0, 226, 255)';
                 setTimeout(() => {
-                    window.location.href = '/req/login';
+                    window.location.href = '/auth/req/login';
                 }, 15000);
             }else{
                 console.error(result.message);

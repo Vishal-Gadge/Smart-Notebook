@@ -36,7 +36,7 @@ if(forgotPassBtn !== null){
 
         //try catch finally block so that any error cause button will be reset to original
         try{
-            const response = await fetch('/req/forgotPass',{
+            const response = await fetch('/auth/req/forgotPass',{
                 method:'POST',
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({email, password})
@@ -80,7 +80,7 @@ if(forgotPassBtn !== null){
 
                         //try catch finally to prevent button being disabled after an error
                         try {
-                            const response = await fetch('/verify/forgotPass',{
+                            const response = await fetch('/auth/verify/forgotPass',{
                                 method:"POST",
                                 headers:{"Content-Type":"application/json"},
                                 body:JSON.stringify({otp})
@@ -92,7 +92,7 @@ if(forgotPassBtn !== null){
                                 changePassSpinner.style.display = 'none';
                                 showResult.textContent = 'You will be redirected to login in 5sec';
                                 setTimeout(() => {
-                                    window.location.href = '/req/login';
+                                    window.location.href = '/auth/req/login';
                                 }, 5000);
                             }else{
                                 //button as in starting and show error

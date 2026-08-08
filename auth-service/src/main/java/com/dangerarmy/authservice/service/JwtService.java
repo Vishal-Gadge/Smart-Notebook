@@ -60,14 +60,4 @@ public class JwtService {
         return claims.getSubject();
     }
 
-    public boolean verifyToken(String username , Claims claims) {
-        try{
-            String subject = claims.getSubject();
-            Date expiry = claims.getExpiration();
-            return subject.equals(username) && expiry.after(new Date());
-        }catch (Exception e){
-            log.error("Token verification failed",e);
-            return false;
-        }
-    }
 }
