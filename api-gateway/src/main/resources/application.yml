@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  fetch-registry: true
+  register-with-eureka: true
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes[0]:
+        predicates[0]: Path=/auth/**
+        id: auth-service
+        uri: lb://auth-service
+        filters: StripPrefix=1
+
+      routes[1]:
+        predicates[0]: Path=/notes/**
+        id: note-service
+        uri: lb://note-service
+        filters: StripPrefix=1
+
+      httpclient:
+        wiretap: true
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: INFO
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 86400000
+
+internal:
+  secret: ${INTERNAL_SECRET}
