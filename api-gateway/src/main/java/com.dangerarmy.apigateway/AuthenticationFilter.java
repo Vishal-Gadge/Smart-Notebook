@@ -32,10 +32,15 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         String path = exchange.getRequest().getURI().getPath();
         log.info("Authentication filter running for path :{}",path);
 
-        // 1. Skip JWT check for auth-service excluding admin endpoints, note service
-        if (!path.startsWith("/auth/admin") && !path.startsWith("/notes") && !path.startsWith("/auth")) {
-            //go to next filter
-            return chain.filter(exchange);
+        // 1. Skip JWT check for /auth/req which are login, signup, forgot pass and static rss
+        if (path.startsWith("/auth/req/") || path.startsWith("/auth/js") || path.startsWith("/auth/css")
+            || path.startsWith("/auth/images") || path.startsWith("/auth/html")) {
+            ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                    .header("X-Internal-Secret", internalSecret)
+                    .build();
+
+            log.warn("jwt filter was skipped for path :{}",path);
+            return chain.filter(exchange.mutate().request(mutatedRequest).build());
         }
 
         // 2. Get token from COOKIE

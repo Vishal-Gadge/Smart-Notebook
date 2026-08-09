@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -22,7 +23,7 @@ public class InternalSecretFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader("X-Internal-Secret");
-        if(!secret.equals(header)){
+        if(!Objects.equals(secret, header)){
             log.warn("User from {} is trying to access auth service externally",request.getRequestURI());
 
             response.setStatus(HttpStatus.FORBIDDEN.value());
@@ -30,7 +31,7 @@ public class InternalSecretFilter extends OncePerRequestFilter {
             response.getWriter().write("{error: Access denied}");
             return;
         }
-        log.info("User auth request is send by gateway");
+        log.info("User auth request is send by gateway to endpoint :{}",request.getRequestURI());
         filterChain.doFilter(request, response);
     }
 }

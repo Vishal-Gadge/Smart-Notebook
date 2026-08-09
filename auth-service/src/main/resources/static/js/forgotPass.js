@@ -80,7 +80,7 @@ if(forgotPassBtn !== null){
 
                         //try catch finally to prevent button being disabled after an error
                         try {
-                            const response = await fetch('/auth/verify/forgotPass',{
+                            const response = await fetch('/auth/req/verify/forgotPass',{
                                 method:"POST",
                                 headers:{"Content-Type":"application/json"},
                                 body:JSON.stringify({otp})

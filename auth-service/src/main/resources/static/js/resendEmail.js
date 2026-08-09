@@ -22,7 +22,7 @@ if(resendEmailBtn !== null){
             btnText.textContent = 'Resending Email...';
             btnSpinner.style.display = 'inline';
 
-            const response = await fetch("/auth/resend-email",{
+            const response = await fetch("/auth/req/resend-email",{
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({email:resendEmail})

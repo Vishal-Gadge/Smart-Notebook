@@ -13,12 +13,13 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@RequestMapping("/req")
 public class ForgotPassController {
 
     @Autowired
     private ForgotPassService forgotPassService;
 
-    @PostMapping("/req/forgotPass")
+    @PostMapping("/forgotPass")
     public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody UserRequest userRequest,
                                                               HttpServletRequest httpRequest){
         forgotPassService.forgotPassword(userRequest, httpRequest);

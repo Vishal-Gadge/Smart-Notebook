@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',async (evt) => {
     }
 
     try {
-        const response = await fetch(`/auth/verify/email?token=${token}`,{
+        const response = await fetch(`/auth/req/verify/email?token=${token}`,{
             method:'POST'
         });
     

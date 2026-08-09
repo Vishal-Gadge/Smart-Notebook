@@ -1,6 +1,5 @@
 package com.dangerarmy.noteservice.config;
 
-import com.dangerarmy.noteservice.exception.InvalidRequestException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -22,7 +22,7 @@ public class InternalSecretFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(!internalSecret.equals(request.getHeader("X-Internal-Secret"))){
+        if(!Objects.equals(internalSecret, request.getHeader("X-Internal-Secret"))){
             log.warn("User on {} is trying to access note service externally", request.getRemoteAddr());
 
             response.setStatus(HttpStatus.FORBIDDEN.value());
