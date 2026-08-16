@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head><title>Get Note</title><link rel="stylesheet" href="/notes/css/style.css"></head>
+<body>
+<div class="container">
+    <nav><a href="/notes">Dashboard</a><a href="/notes/html/getnote.html" class="active">Get Note</a></nav>
+    <div class="card">
+        <h2>Get Note by Title</h2>
+        <label>Title</label><input id="title">
+        <button id="getNoteBtn">
+            <span id="getNoteBtnSpinner" class="spinner" style="display: none;"></span>
+            <span id="getNoteBtnText">Get Note</span>
+        </button>
+        <textarea id="result" style="display: none;"></textarea>
+        <div id="toast"></div>
+    </div>
+</div>
+<script src="/notes/js/toast.js"></script>
+<script src="/notes/js/getNote.js"></script>
+</body>
+</html>

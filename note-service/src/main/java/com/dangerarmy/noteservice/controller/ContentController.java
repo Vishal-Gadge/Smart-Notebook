@@ -8,6 +8,6 @@ public class ContentController {
 
     @GetMapping("/")
     public String showHomepage(){
-        return "index.html";
+        return "index";
     }
 }

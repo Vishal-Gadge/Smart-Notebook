@@ -42,7 +42,7 @@ if(loginBtn != null){
                 setTimeout(() => {
                     //this redirect goes to note service through gateway
                     window.location.href = '/notes/';
-                }, 5000);
+                }, 3000);
             }else{
                 console.error(result.message);
                 btnText.textContent = 'Log in';

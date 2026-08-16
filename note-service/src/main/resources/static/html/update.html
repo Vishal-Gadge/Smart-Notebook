@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Update Note</title><link rel="stylesheet" href="/notes/css/style.css"></head>
+<body>
+<div class="container">
+    <nav><a href="/notes">Dashboard</a><a href="/notes/html/update.html" class="active">Update</a></nav>
+    <div class="card">
+        <h2>Update Note</h2>
+        <label>Title</label><input id="title">
+        <div id="textDiv" style="display: none;">
+            <label>Text</label>
+            <textarea id="result"></textarea>
+        </div>
+        <button id="updateBtn">
+            <span id="updateBtnSpinner" class="spinner" style="display: none;"></span>
+            <span id="updateBtnText">Get Note</span>
+        </button>
+        <div id="toast"></div>
+    </div>
+</div>
+<script src="/notes/js/toast.js"></script>
+<script src="/notes/js/update.js"></script>
+</body>
+</html>

@@ -16,6 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -34,13 +35,21 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
         // 1. Skip JWT check for /auth/req which are login, signup, forgot pass and static rss
         if (path.startsWith("/auth/req/") || path.startsWith("/auth/js") || path.startsWith("/auth/css")
-            || path.startsWith("/auth/images") || path.startsWith("/auth/html")) {
+            || path.startsWith("/auth/images") || path.startsWith("/auth/html")
+            || path.startsWith("/notes/health") || path.startsWith("/auth/health")) {
             ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
                     .header("X-Internal-Secret", internalSecret)
                     .build();
 
             log.warn("jwt filter was skipped for path :{}",path);
             return chain.filter(exchange.mutate().request(mutatedRequest).build());
+        }
+
+        // 1.1. Skip JWT check if it has X-Internal-Secret means coming from other services through feign
+        String secretHeader = exchange.getRequest().getHeaders().getFirst("X-Internal-Secret");
+        System.out.println("Secret header is :"+secretHeader);
+        if(Objects.equals(secretHeader,internalSecret)){
+            return chain.filter(exchange);
         }
 
         // 2. Get token from COOKIE

@@ -1,12 +1,18 @@
 package com.dangerarmy.noteservice.client;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.Map;
 
-@FeignClient(name = "auth-service")
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+//Goes to auth-service/** through gateway
+@FeignClient(name = "api-gateway", path = "/auth")
 public interface AuthClient {
 
-    @GetMapping("/health")
-    String checkHealth();
+    @GetMapping("/profile")
+    ResponseEntity<Map<String, String>> getProfile(
+            @RequestHeader("X-User-Id") Long id);
 
 }

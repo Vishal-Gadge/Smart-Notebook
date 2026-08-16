@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Delete Note</title><link rel="stylesheet" href="/notes/css/style.css"></head>
+<body>
+<div class="container">
+    <nav><a href="/notes">Dashboard</a><a href="/notes/html/delete.html" class="active">Delete</a></nav>
+    <div class="card">
+        <h2>Delete Note by Title</h2>
+        <label>Title</label><input id="title">
+        <label id="textLabel" style="display: none;">You about to delete this Note</label>
+        <textarea id="result" readonly style="display: none; margin-top: 0px;"></textarea>
+
+        <button id="deleteBtn" class="btn-danger">
+            <span id="deleteBtnSpinner" class="spinner" style="display: none;"></span>
+            <span id="deleteBtnText">Delete</span>
+        </button>
+        
+        <div id="toast"></div>
+    </div>
+</div>
+<script src="/notes/js/toast.js"></script>
+<script src="/notes/js/delete.js"></script>
+</body>
+</html>

@@ -21,5 +21,7 @@ public class Note {
     @Column(nullable = false)
     private String title;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String text;
 }
