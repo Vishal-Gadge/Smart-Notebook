@@ -1,5 +1,6 @@
-package com.dangerarmy.apigateway;
+package com.dangerarmy.apigateway.filter;
 
+import com.dangerarmy.apigateway.services.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,6 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-        log.info("Authentication filter running for path :{}",path);
 
         // 1. Skip JWT check for /auth/req which are login, signup, forgot pass and static rss
         if (path.startsWith("/auth/req/") || path.startsWith("/auth/js") || path.startsWith("/auth/css")
@@ -41,13 +41,11 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                     .header("X-Internal-Secret", internalSecret)
                     .build();
 
-            log.warn("jwt filter was skipped for path :{}",path);
             return chain.filter(exchange.mutate().request(mutatedRequest).build());
         }
 
-        // 1.1. Skip JWT check if it has X-Internal-Secret means coming from other services through feign
+        // 1.1. Skip JWT check if it has X-Internal-Secret means coming from internal services through feign
         String secretHeader = exchange.getRequest().getHeaders().getFirst("X-Internal-Secret");
-        System.out.println("Secret header is :"+secretHeader);
         if(Objects.equals(secretHeader,internalSecret)){
             return chain.filter(exchange);
         }
@@ -56,20 +54,16 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("jwt");
 
         if (tokenCookie == null) {
-            log.warn("Missing token cookie for path: {}", path);
             return onError(exchange, "Missing Token Cookie", HttpStatus.UNAUTHORIZED);
         }
 
         String token = tokenCookie.getValue();
-        log.info("token get from cookie :{}",token);
 
         // 3. Validate token and take userId
         Long userId = ((Number) jwtUtil.extractClaims(token).get("id")).longValue();
-        log.info("user id from token is :{}",userId);
 
         // 4. Role check for admin routes
         if (path.startsWith("/auth/admin") && !jwtUtil.hasRole(token, "ADMIN")) {
-            log.warn("Forbidden: ADMIN role required for path: {}", path);
             return onError(exchange, "Forbidden: ADMIN role required", HttpStatus.FORBIDDEN);
         }
 
@@ -79,7 +73,6 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
                 .header("X-User-Id",String.valueOf(userId))
                 .build();
 
-        log.info("authentication filter done his work");
         return chain.filter(exchange.mutate().request(mutatedRequest).build());
     }
 
@@ -94,7 +87,6 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        log.warn("get order method run : -1");
         return -1; // Run this filter first
     }
 }

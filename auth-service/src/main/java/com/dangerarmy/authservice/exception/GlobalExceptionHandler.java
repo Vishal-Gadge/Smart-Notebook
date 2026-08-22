@@ -39,7 +39,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnknownHostException.class)
     public ResponseEntity<Map<String, String>> handleUnknownHost(UnknownHostException e){
-        log.warn("UnknownHostException was hit",e);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("message",e.getMessage()));
     }

@@ -1,5 +1,7 @@
-package com.dangerarmy.apigateway;
+package com.dangerarmy.apigateway.services;
 
+import com.dangerarmy.apigateway.exception.ExpiredJWTException;
+import com.dangerarmy.apigateway.exception.InvalidJWTException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -29,9 +31,9 @@ public class JwtUtil {
                     .parseSignedClaims(token)
                     .getPayload();
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("Jwt expired , go login again",e);
+            throw new ExpiredJWTException("Jwt token is Expired, Go login");
         } catch (JwtException e) {
-            throw new RuntimeException("Invalid jwt",e);
+            throw new InvalidJWTException("Invalid jwt");
         }
     }
 

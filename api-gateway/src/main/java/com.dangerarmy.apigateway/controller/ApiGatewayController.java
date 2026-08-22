@@ -1,4 +1,4 @@
-package com.dangerarmy.apigateway;
+package com.dangerarmy.apigateway.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

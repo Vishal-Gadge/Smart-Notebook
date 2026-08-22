@@ -22,7 +22,6 @@ public class ContentController {
 
     @GetMapping("/admin")
     public String showAdminPanel(){
-        System.out.println("Admin endpoint running");
         return "admin";
     }
 }

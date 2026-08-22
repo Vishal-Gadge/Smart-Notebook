@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head><title>Delete Note</title><link rel="stylesheet" href="/notes/css/style.css"></head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Note</title>
+    <link rel="stylesheet" href="/notes/css/style.css">
+</head>
 <body>
 <div class="container">
     <nav><a href="/notes">Dashboard</a><a href="/notes/html/delete.html" class="active">Delete</a></nav>
     <div class="card">
         <h2>Delete Note by Title</h2>
-        <label>Title</label><input id="title">
+        <label>Title</label><textarea id="title" rows="1"></textarea>
         <label id="textLabel" style="display: none;">You about to delete this Note</label>
         <textarea id="result" readonly style="display: none; margin-top: 0px;"></textarea>
 
@@ -18,7 +22,7 @@
         <div id="toast"></div>
     </div>
 </div>
-<script src="/notes/js/toast.js"></script>
+<script src="/notes/js/utils.js"></script>
 <script src="/notes/js/delete.js"></script>
 </body>
 </html>

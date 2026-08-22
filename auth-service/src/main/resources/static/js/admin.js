@@ -20,7 +20,7 @@ if(adminBtn != null){
                 alert("You are not Admin");
             }
         }catch(excp){
-            console.log("exception occurred "+excp);
+            console.error("exception occurred "+excp);
             alert("You are not Admin");
         }
     })

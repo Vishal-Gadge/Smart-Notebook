@@ -67,7 +67,6 @@ public class LoginService {
 
         //generate jwt
         String jwt = jwtService.generateToken(dbuser.orElseThrow());
-        log.info("jwt is :{}",jwt);
         ResponseCookie responseCookie = ResponseCookie.from("jwt",jwt)
                 .httpOnly(true)
                 .secure(true)

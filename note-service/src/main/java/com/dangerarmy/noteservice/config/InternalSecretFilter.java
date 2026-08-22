@@ -30,7 +30,6 @@ public class InternalSecretFilter extends OncePerRequestFilter {
             response.getWriter().write("{error: Access denied}");
             return;
         }
-        log.info("Internal secret filter passed for url :{}",request.getRequestURI());
         filterChain.doFilter(request, response);
     }
 }

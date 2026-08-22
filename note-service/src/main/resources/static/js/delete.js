@@ -3,11 +3,12 @@ const btnText = document.getElementById('deleteBtnText');
 const btnSpinner = document.getElementById('deleteBtnSpinner');
 const showResult = document.getElementById('result');
 const textLabel = document.getElementById('textLabel');
+const titleCont = document.getElementById('title');
 let stage = 'check';
 
 if(button){
     button.addEventListener('click', async (evt) => {
-        const title = document.getElementById('title').value;
+        const title = titleCont.value;
         if(!title){
             showToast("Title cannot be empty");
             return;
@@ -44,7 +45,7 @@ async function checkDeleteNote(title, btnText){
             textLabel.style.display = 'inline-block';
             showResult.textContent = data.text; 
             showResult.style.display = 'inline-block';
-            autoResize();
+            enableAutoResize(showResult);
             btnText.textContent = 'Confirm Delete';
             stage = 'delete';
         }else{
@@ -89,11 +90,4 @@ async function DeleteNote(title, btnText) {
     }
 }
 
-
-function autoResize(){
-    showResult.style.height = 'auto';
-    showResult.style.height = showResult.scrollHeight + 'px';
-}
-
-showResult.addEventListener('input', autoResize);
-window.addEventListener('load',autoResize);
+enableAutoResize(titleCont, showResult);

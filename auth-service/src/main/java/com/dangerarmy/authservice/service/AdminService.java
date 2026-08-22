@@ -18,6 +18,7 @@ public class AdminService {
     private final UserRepo userRepo;
     private final UserRolesRepo userRolesRepo;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
 
     public void addAdmin(UserModel admin){
@@ -25,6 +26,6 @@ public class AdminService {
         UserModel dbAdmin = userRepo.save(admin);
         userRolesRepo.save(new UserRoles(null,dbAdmin,"USER"));
         userRolesRepo.save(new UserRoles(null,dbAdmin,"ADMIN"));
-        log.info("Admin was added with email :{}",admin.getEmail());
+        log.info("Admin was added with email :{}",emailService.maskEmail(admin.getEmail()));
     }
 }

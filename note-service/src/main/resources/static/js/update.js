@@ -3,13 +3,14 @@ const btnText = document.getElementById('updateBtnText');
 const btnSpinner = document.getElementById('updateBtnSpinner');
 const textDiv = document.getElementById('textDiv');
 const result = document.getElementById('result');
+const titleCont = document.getElementById('title');
 let stage = 'get';
 
 if(button){
     button.addEventListener('click', async (evt) => {
         evt.preventDefault();
 
-        const title = document.getElementById('title').value;
+        const title = titleCont.value;
 
         if(!title){
             showToast("Title is empty");
@@ -44,6 +45,7 @@ async function getNote(button, title) {
             btnText.textContent = 'Update Note';
             textDiv.style.display = 'block';
             result.textContent = data.text;
+            enableAutoResize(result);
             stage = 'update';
         }else{
             showToast(data.message);
@@ -90,3 +92,5 @@ async function updateNote(button){
         textDiv.style.display = 'none';
     }    
 }
+
+enableAutoResize(titleCont, result);

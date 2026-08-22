@@ -31,7 +31,6 @@ public class InternalSecretFilter extends OncePerRequestFilter {
             response.getWriter().write("{error: Access denied}");
             return;
         }
-        log.info("User auth request is send by gateway to endpoint :{}",request.getRequestURI());
         filterChain.doFilter(request, response);
     }
 }

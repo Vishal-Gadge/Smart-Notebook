@@ -1,4 +1,6 @@
 const button = document.getElementById('addNoteBtn');
+const title = document.getElementById('title');
+const text = document.getElementById('text');
 if(button){
     button.addEventListener('click', async (evt) => {
         evt.preventDefault();
@@ -45,3 +47,5 @@ if(button){
         }        
     })
 }
+
+enableAutoResize(title, text);

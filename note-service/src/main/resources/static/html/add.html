@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head><title>Add Note</title><link rel="stylesheet" href="/notes/css/style.css"></head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Note</title>
+    <link rel="stylesheet" href="/notes/css/style.css">
+</head>
 <body>
 <div class="container">
     <nav><a href="/notes">Dashboard</a><a href="/notes/html/add.html" class="active">Add Note</a></nav>
     <div class="card">
         <h2>Add New Note</h2>
-        <label>Title</label><input id="title">
-        <label>Text</label><textarea id="text"></textarea>
+        <label>Title</label><textarea id="title" rows="1"></textarea>
+        <label>Text</label><textarea id="text" rows="4"></textarea>
         <button id="addNoteBtn">
             <span id="addNoteBtnSpinner" class="spinner" style="display: none;"></span>
             <span id="addNoteBtnText">Save Note</span>            
@@ -16,7 +20,7 @@
         <div id="toast"></div>
     </div>
 </div>
-<script src="/notes/js/toast.js"></script>
+<script src="/notes/js/utils.js"></script>
 <script src="/notes/js/addNote.js"></script>
 </body>
 </html>
